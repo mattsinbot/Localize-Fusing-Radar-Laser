@@ -2,6 +2,7 @@
 import numpy as np
 import tool
 
+
 class KalmanFilter(object):
 	def __init__(self):
 		self._x = None

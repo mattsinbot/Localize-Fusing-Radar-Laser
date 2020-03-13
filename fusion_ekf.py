@@ -4,32 +4,23 @@ import kalman_filter as kf
 import numpy as np
 import tool
 
+
 class FusionEKF(object):
 	def __init__(self):
 		self._ekf = kf.KalmanFilter()
 		self._is_initialized = False
 		self._prev_timestmp = 0.0
-		self._R_laser = np.array([[0.0225, 0],
-								  [0, 0.0225]])   # user defined parameter
-		self._R_radar = np.array([[0.09, 0, 0],
-								  [0, 0.0009, 0],
-								  [0, 0, 0.09]]) # user defined parameter
-		self._H_laser = np.array([[1.0, 0, 0, 0],
-								  [0, 1.0, 0, 0]]) # user defined parameter
-		self._H_radar = None  # jacobian of radar measurement model
+		self._R_laser = np.array([[0.0225, 0], [0, 0.0225]])   # user defined parameter
+		self._R_radar = np.array([[0.09, 0, 0], [0, 0.0009, 0], [0, 0, 0.09]]) # user defined parameter
+		self._H_laser = np.array([[1.0, 0, 0, 0], [0, 1.0, 0, 0]]) # user defined parameter
+		self._H_radar = None  # Jacobian of radar measurement model
 
 		self.noise_ax = 9.0
 		self.noise_ay = 9.0
 
-		self._ekf._P = np.array([[1.0, 0, 0, 0],
-		                        [0, 1.0, 0, 0],
-		                        [0, 0, 1000.0, 0],
-		                        [0, 0, 0, 1000.0]])
+		self._ekf._P = np.array([[1.0, 0, 0, 0], [0, 1.0, 0, 0], [0, 0, 1000.0, 0], [0, 0, 0, 1000.0]])
 
-		self._ekf._F = np.array([[1.0, 0, 1.0, 0],
-								 [0, 1.0, 0, 1.0],
-								 [0, 0, 1.0, 0],
-								 [0, 0, 0, 1.0]])
+		self._ekf._F = np.array([[1.0, 0, 1.0, 0], [0, 1.0, 0, 1.0], [0, 0, 1.0, 0], [0, 0, 0, 1.0]])
 
 	def process_est(self, meas):
 		if not self._is_initialized:
@@ -54,10 +45,9 @@ class FusionEKF(object):
 			self._prev_timestmp = meas[4]
 			z = np.array([[meas[1]], [meas[2]], [meas[3]]])
 		else:
-			dt = (meas[3] - self._prev_timestmp) / 1000000.0 # convert time in seconds
+			dt = (meas[3] - self._prev_timestmp) / 1000000.0  # convert time in seconds
 			self._prev_timestmp = meas[3]
 			z = np.array([[meas[1]], [meas[2]]])
-
 
 		# modify the state-transition matrix with current dt value
 		self._ekf._F[0, 2] = dt

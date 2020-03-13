@@ -52,9 +52,9 @@ def fused_estimate():
 	plt.legend(loc="best")
 
 	plt.figure(2)
-	est_data2 = plt.plot(x_data, y_data, "g.", markersize=2, label="estimate")
-	laser_meas = plt.plot(x_las, y_las, "r.", markersize=2, label="laser meas")
-	radar_meas = plt.plot(x_rad, y_rad, "b.", markersize=2, label="radar meas")
+	est_data2 = plt.plot(x_data, y_data, color="green", marker="D", markersize=2, label="estimate")
+	laser_meas = plt.plot(x_las, y_las, color="red", marker="D", markersize=3, label="laser meas", linestyle="None")
+	radar_meas = plt.plot(x_rad, y_rad, color="blue", marker="D", markersize=3, label="radar meas", linestyle="None")
 	plt.xlabel("x [m]")
 	plt.ylabel("y [m]")
 	plt.legend(loc="best")
