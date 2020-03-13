@@ -22,6 +22,7 @@ The key steps in achieving robust localization fusing sensor data are as follows
 
 The relevant equations used for prediction and steps are show in the figure below,
 ![concept figure](./figures/sensor_fusion_concept_figure.png).
+The matrix `H` in the update-KF step indicates linear measurement model (RADAR) whereas `H_j` in the update-EKF step is the Jacobian of the non-linear measurement model (LASER).
 
 The output is shown in animation in the top figure where blue and red triangles denote noisy measurements of the car obtained from the RADAR and LASER respectively. The estimated pose obtained by fusing these two sensor information using EKF is shown as green dots. Finally estimated path is compared with ground truth data in the figure below.
 ![concept figure](./figures/est_gth_compare.png)
